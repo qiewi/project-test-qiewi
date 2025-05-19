@@ -1,8 +1,8 @@
 "use client"
 
-import Header from "../components/Header";
-import Banner from "../components/Banner";
-import PostList from "../components/PostList";
+import Header from "@/components/Header";
+import Banner from "@/components/Banner";
+import PostList from "@/components/PostList";
 import SocialMedia from "@/../public/social-media.jpg"
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -77,7 +77,6 @@ export default function Home() {
 
   return (
     <div>
-      <Header />
       <main>
         <Banner
           imageUrl={"/banner.jpg"}

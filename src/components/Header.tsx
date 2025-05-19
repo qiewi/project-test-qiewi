@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useRef, useState } from 'react';
 import Suitmedia from "@/../public/suitmedia.png"
 import Image from 'next/image'
@@ -53,7 +55,7 @@ const Header: React.FC = () => {
           {menuItems.map(item => (
             <li
               key={item.path}
-              className={`font-medium text-white hover:underline underline-offset-8 transition-all duration-200 ${pathname === item.path ? 'underline text-white underline-offset-8' : ''}`}
+              className={`font-medium text-white hover:underline underline-offset-8 transition-all duration-200 ${pathname === item.path ? 'underline text-white underline-offset-8 decoration-4' : ''}`}
             >
               <a href={item.path}>{item.label}</a>
             </li>
