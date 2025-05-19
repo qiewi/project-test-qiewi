@@ -64,10 +64,11 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <main className="pt-20">
+      <main>
         <Banner
-          imageUrl={posts[0]?.image || "/banner-placeholder.jpg"}
-          text={posts[0]?.title || "Ideas - Where all our great things begin"}
+          imageUrl={"/banner.jpg"}
+          title="Ideas"
+          text="Where all our great things begin"
         />
         {loading ? (
           <div className="text-center py-20">Loading...</div>
