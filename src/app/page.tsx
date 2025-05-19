@@ -3,7 +3,7 @@
 import Header from "../components/Header";
 import Banner from "../components/Banner";
 import PostList from "../components/PostList";
-import { useSearchParams, useRouter } from "next/navigation";
+import SocialMedia from "@/../public/social-media.jpg"
 import { useEffect, useState } from "react";
 
 interface Post {
@@ -40,7 +40,7 @@ export default function Home() {
         setPosts(
           data.data.map((item: any) => ({
             id: item.id,
-            image: item.medium_image?.url || item.small_image?.url || '',
+            image: item.medium_image?.url || item.small_image?.url || SocialMedia,
             title: item.title,
             date: item.published_at ? new Date(item.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '',
           }))
