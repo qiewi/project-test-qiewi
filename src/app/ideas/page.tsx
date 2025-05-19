@@ -26,14 +26,12 @@ export default function Home() {
   const showPerPage = Number(searchParams.get("size") || 10);
   const sort = searchParams.get("sort") || "-published_at";
 
-  // Update URL and refresh
   const updateUrl = (params: Record<string, any>) => {
     const url = new URL(window.location.href);
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
     router.replace(url.pathname + url.search);
   };
 
-  // Fetch data for the current page only
   useEffect(() => {
     setLoading(true);
     fetch(`/api/ideas?page[number]=${page}&page[size]=${showPerPage}&append[]=small_image&append[]=medium_image`)
@@ -52,7 +50,6 @@ export default function Home() {
       });
   }, [page, showPerPage]);
 
-  // Sort only the posts shown on the current page (frontend sort)
   useEffect(() => {
     let sorted = [...pagePosts];
     if (sort === "-published_at") {
@@ -63,7 +60,6 @@ export default function Home() {
     setDisplayPosts(sorted);
   }, [sort, pagePosts]);
 
-  // Handler
   const handleSortChange = (val: string) => {
     updateUrl({ sort: val });
   };

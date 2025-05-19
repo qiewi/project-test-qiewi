@@ -12,7 +12,6 @@ const Banner: React.FC<BannerProps> = ({ imageUrl, title, text }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // You can tweak the divisor for more/less parallax
       setOffset(window.scrollY * 0.4);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -34,7 +33,7 @@ const Banner: React.FC<BannerProps> = ({ imageUrl, title, text }) => {
       <div
         className="relative z-10 flex items-center justify-center h-full flex-col"
         style={{
-          transform: `translateY(${offset * 0.3}px)`, // text moves slower for more parallax
+          transform: `translateY(${offset * 0.3}px)`, 
           transition: 'transform 0.1s linear',
         }}
       >

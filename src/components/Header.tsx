@@ -30,9 +30,9 @@ const Header: React.FC = () => {
         return;
       }
       if (currentScroll > lastScroll.current) {
-        setShow(false); // scroll down
+        setShow(false); 
       } else {
-        setShow(true); // scroll up
+        setShow(true);
       }
       lastScroll.current = currentScroll;
     };

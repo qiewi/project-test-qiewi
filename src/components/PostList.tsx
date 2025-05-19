@@ -10,11 +10,7 @@ import {
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon, MoreHorizontalIcon } from "lucide-react";
 
@@ -92,11 +88,10 @@ const PostList: React.FC<PostListProps> = ({ posts, sort, showPerPage, onSortCha
           <PostCard key={post.id} image={post.image} title={post.title} date={post.date} />
         ))}
       </div>
-      {/* Pagination */}
+
       <div className="flex justify-center mt-16">
         <Pagination>
           <PaginationContent>
-            {/* First page */}
             <PaginationItem>
               <button
                 className="w-8 h-8 flex items-center justify-center rounded transition-colors disabled:opacity-50"
@@ -107,7 +102,6 @@ const PostList: React.FC<PostListProps> = ({ posts, sort, showPerPage, onSortCha
                 <ChevronsLeftIcon className="w-4 h-4" />
               </button>
             </PaginationItem>
-            {/* Previous page */}
             <PaginationItem>
               <button
                 className="w-8 h-8 flex items-center justify-center rounded transition-colors disabled:opacity-50"
@@ -118,7 +112,6 @@ const PostList: React.FC<PostListProps> = ({ posts, sort, showPerPage, onSortCha
                 <ChevronLeftIcon className="w-4 h-4" />
               </button>
             </PaginationItem>
-            {/* Page numbers and ellipsis */}
             {pages.map((p, idx) =>
               p === '...'
                 ? (
@@ -139,7 +132,6 @@ const PostList: React.FC<PostListProps> = ({ posts, sort, showPerPage, onSortCha
                   </PaginationItem>
                 )
             )}
-            {/* Next page */}
             <PaginationItem>
               <button
                 className="w-8 h-8 flex items-center justify-center rounded transition-colors disabled:opacity-50"
@@ -150,7 +142,6 @@ const PostList: React.FC<PostListProps> = ({ posts, sort, showPerPage, onSortCha
                 <ChevronRightIcon className="w-4 h-4" />
               </button>
             </PaginationItem>
-            {/* Last page */}
             <PaginationItem>
               <button
                 className="w-8 h-8 flex items-center justify-center rounded transition-colors disabled:opacity-50"
