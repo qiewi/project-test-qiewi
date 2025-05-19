@@ -5,54 +5,68 @@ import Banner from "../components/Banner";
 import PostList from "../components/PostList";
 import SocialMedia from "@/../public/social-media.jpg"
 import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Post {
   id: string;
   image: string;
   title: string;
   date: string;
+  published_at: string;
 }
 
 export default function Home() {
-  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-  const [posts, setPosts] = useState<Post[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [pagePosts, setPagePosts] = useState<Post[]>([]);
+  const [displayPosts, setDisplayPosts] = useState<Post[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // State dari URL
-  const page = Number(searchParams?.get("page") || 1);
-  const showPerPage = Number(searchParams?.get("size") || 10);
-  const sort = searchParams?.get("sort") || "-published_at";
+  const page = Number(searchParams.get("page") || 1);
+  const showPerPage = Number(searchParams.get("size") || 10);
+  const sort = searchParams.get("sort") || "-published_at";
 
-  // Update URL
+  // Update URL and refresh
   const updateUrl = (params: Record<string, any>) => {
     const url = new URL(window.location.href);
     Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
-    window.history.replaceState({}, '', url.toString());
+    router.replace(url.pathname + url.search);
   };
 
-  // Fetch data
+  // Fetch data for the current page only
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/ideas?page[number]=${page}&page[size]=${showPerPage}&sort=${sort}&append[]=small_image&append[]=medium_image`)
+    fetch(`/api/ideas?page[number]=${page}&page[size]=${showPerPage}&append[]=small_image&append[]=medium_image`)
       .then(res => res.json())
       .then(data => {
-        setPosts(
-          data.data.map((item: any) => ({
-            id: item.id,
-            image: item.medium_image?.url || item.small_image?.url || SocialMedia,
-            title: item.title,
-            date: item.published_at ? new Date(item.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '',
-          }))
-        );
+        const fetchedPosts = data.data.map((item: any) => ({
+          id: item.id,
+          image: item.medium_image?.url || item.small_image?.url || SocialMedia,
+          title: item.title,
+          date: item.published_at ? new Date(item.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '',
+          published_at: item.published_at || '',
+        }));
+        setPagePosts(fetchedPosts);
         setTotal(data.meta?.total || 0);
         setLoading(false);
       });
-  }, [page, showPerPage, sort]);
+  }, [page, showPerPage]);
+
+  // Sort only the posts shown on the current page (frontend sort)
+  useEffect(() => {
+    let sorted = [...pagePosts];
+    if (sort === "-published_at") {
+      sorted.sort((a, b) => ((b.published_at || "") > (a.published_at || "") ? 1 : -1));
+    } else {
+      sorted.sort((a, b) => ((a.published_at || "") > (b.published_at || "") ? 1 : -1));
+    }
+    setDisplayPosts(sorted);
+  }, [sort, pagePosts]);
 
   // Handler
   const handleSortChange = (val: string) => {
-    updateUrl({ sort: val, page: 1 });
+    updateUrl({ sort: val });
   };
   const handleShowPerPageChange = (val: number) => {
     updateUrl({ size: val, page: 1 });
@@ -74,7 +88,7 @@ export default function Home() {
           <div className="text-center py-20">Loading...</div>
         ) : (
           <PostList
-            posts={posts}
+            posts={displayPosts}
             sort={sort}
             showPerPage={showPerPage}
             onSortChange={handleSortChange}

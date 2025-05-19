@@ -29,7 +29,7 @@ const PostCard: React.FC<PostCardProps> = ({ image, title, date }) => {
         </div>
       </CardHeader>
       <CardContent className="p-4 flex flex-col flex-1">
-        <div className="text-xs text-gray-500 mb-2">{date}</div>
+        <div className="text-xs text-gray-500 mb-2 uppercase">{date}</div>
         <div className="font-semibold text-base line-clamp-3 h-[4.5em] overflow-hidden">{title}</div>
       </CardContent>
     </Card>
