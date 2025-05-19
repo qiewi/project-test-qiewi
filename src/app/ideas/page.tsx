@@ -1,9 +1,8 @@
 "use client"
 
-import Header from "@/components/Header";
 import Banner from "@/components/Banner";
 import PostList from "@/components/PostList";
-import SocialMedia from "@/../public/social-media.jpg"
+import Placeholder from "@/../public/social-media.jpg"
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -42,7 +41,7 @@ export default function Home() {
       .then(data => {
         const fetchedPosts = data.data.map((item: any) => ({
           id: item.id,
-          image: item.medium_image?.url || item.small_image?.url || SocialMedia,
+          image: item.medium_image?.url || item.small_image?.url || Placeholder,
           title: item.title,
           date: item.published_at ? new Date(item.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '',
           published_at: item.published_at || '',
