@@ -62,10 +62,10 @@ const PostList: React.FC<PostListProps> = ({ posts, sort, showPerPage, onSortCha
           <div className="flex gap-2 items-center">
             <span className="text-[#757575]">Show per page:</span>
             <Select value={showPerPage.toString()} onValueChange={(value) => onShowPerPageChange(Number(value))}>
-              <SelectTrigger className="w-[80px]">
+              <SelectTrigger className="rounded-3xl border-gray-300 w-[120px]">
                 <SelectValue placeholder="Select size" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className='bg-white border-none'>
                 {[10, 20, 50].map(size => (
                   <SelectItem key={size} value={size.toString()}>{size}</SelectItem>
                 ))}
@@ -75,10 +75,10 @@ const PostList: React.FC<PostListProps> = ({ posts, sort, showPerPage, onSortCha
           <div className="flex gap-2 items-center">
             <span className="text-[#757575]">Sort by:</span>
             <Select value={sort} onValueChange={onSortChange}>
-              <SelectTrigger className="w-[120px]">
+              <SelectTrigger className="rounded-3xl border-gray-300 w-[120px]">
                 <SelectValue placeholder="Select sort" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className='bg-white border-none'>
                 <SelectItem value="-published_at">Newest</SelectItem>
                 <SelectItem value="published_at">Oldest</SelectItem>
               </SelectContent>

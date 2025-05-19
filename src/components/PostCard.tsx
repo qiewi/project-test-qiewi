@@ -14,7 +14,7 @@ interface PostCardProps {
 
 const PostCard: React.FC<PostCardProps> = ({ image, title, date }) => {
   return (
-    <Card className="overflow-hidden flex flex-col border-none shadow-xl rounded-xl">
+    <Card className="overflow-hidden flex flex-col border-none shadow-xl rounded-xl py-0">
       <CardHeader className="p-0">
         <div className="relative w-full aspect-[16/10] rounded-xl">
           <Image
