@@ -3,7 +3,7 @@
 import Banner from "@/components/Banner";
 import PostList from "@/components/PostList";
 import Placeholder from "@/../public/social-media.jpg"
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface Post {
@@ -14,7 +14,7 @@ interface Post {
   published_at: string;
 }
 
-export default function Home() {
+function IdeasContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [pagePosts, setPagePosts] = useState<Post[]>([]);
@@ -72,26 +72,36 @@ export default function Home() {
 
   return (
     <div>
-      <main>
-        <Banner
-          imageUrl={"/banner.jpg"}
-          title="Ideas"
-          text="Where all our great things begin"
+      <Banner
+        imageUrl={"/banner.jpg"}
+        title="Ideas"
+        text="Where all our great things begin"
+      />
+      {loading ? (
+        <div className="text-center py-20">Loading...</div>
+      ) : (
+        <PostList
+          posts={displayPosts}
+          sort={sort}
+          showPerPage={showPerPage}
+          onSortChange={handleSortChange}
+          onShowPerPageChange={handleShowPerPageChange}
+          page={page}
+          total={total}
+          onPageChange={handlePageChange}
         />
-        {loading ? (
-          <div className="text-center py-20">Loading...</div>
-        ) : (
-          <PostList
-            posts={displayPosts}
-            sort={sort}
-            showPerPage={showPerPage}
-            onSortChange={handleSortChange}
-            onShowPerPageChange={handleShowPerPageChange}
-            page={page}
-            total={total}
-            onPageChange={handlePageChange}
-          />
-        )}
+      )}
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <div>
+      <main>
+        <Suspense fallback={<div className="text-center py-20">Loading...</div>}>
+          <IdeasContent />
+        </Suspense>
       </main>
     </div>
   );
